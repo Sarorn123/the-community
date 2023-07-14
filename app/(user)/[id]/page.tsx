@@ -7,12 +7,13 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/option"
 import DeleteQuestion from "./_components/DeleteQuestion"
 import DisplayStringWithLink from "@/components/DisplayStringWithLink"
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 
-export async function generateMetadata(
-    { params }: { params: { id: string } },
-    parent?: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({
+    params,
+}: {
+    params: { id: string }
+}): Promise<Metadata> {
     const id = params.id
     const quesiton = await prisma.question.findUnique({
         where: { id },

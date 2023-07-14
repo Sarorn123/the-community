@@ -10,10 +10,17 @@ import { authOptions } from "../api/auth/[...nextauth]/option"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Prisma } from "@prisma/client"
+import { Metadata } from "next"
 
 export const fetchCache = "force-no-store"
 // 'auto' | 'default-cache' | 'only-cache'
 // 'force-cache' | 'force-no-store' | 'default-no-store' | 'only-no-store'
+
+export const metadata: Metadata = {
+    title: "The Community",
+    description:
+        "the community is a website for asking question people will come here and try to answer your question",
+}
 
 async function fetchPosts(search: string) {
     const session = await getServerSession(authOptions)

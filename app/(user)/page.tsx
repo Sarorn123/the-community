@@ -105,6 +105,7 @@ export default async function Page(params: {
                             totalComment={feed._count.comment}
                             totalVote={feed.totalVote}
                             voteType={feed.votes[0]?.voteType}
+                            createdAt={feed.createdAt}
                         />
                     ))}
                 </section>

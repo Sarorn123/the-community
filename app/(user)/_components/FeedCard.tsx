@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { VoteType } from "@prisma/client"
 import VoteAction from "./VoteAction"
+import moment from "moment"
 
 type Props = {
     id: string
@@ -16,6 +17,7 @@ type Props = {
     image: string | null
     totalComment: number
     voteType: VoteType
+    createdAt: Date
 }
 
 const FeedCard = ({
@@ -27,11 +29,15 @@ const FeedCard = ({
     totalComment,
     voteType,
     image,
+    createdAt,
 }: Props) => {
     return (
         <div className="rounded-lg border px-4 py-2 lg:py-3 lg:px-6 mt-5 group transition">
             <Link href={"/" + id}>
-                <h1 className="lg:text-lg font-semibold">{title}</h1>
+                <div className="flex justify-between">
+                    <h1 className="lg:text-lg font-semibold">{title}</h1>
+                    <p>{moment(createdAt).fromNow()}</p>
+                </div>
                 <p className="text-blue-600 text-sm font-semibold">{tages}</p>
                 <pre className="my-3">{content}</pre>
                 {image && (

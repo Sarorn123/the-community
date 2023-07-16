@@ -117,4 +117,6 @@ model Vote {
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
   voteType   VoteType
+
+  @@unique([userId, questionId])
 }

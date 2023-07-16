@@ -8,6 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/option"
 import DeleteQuestion from "./_components/DeleteQuestion"
 import DisplayStringWithLink from "@/components/DisplayStringWithLink"
 import { Metadata } from "next"
+import moment from "moment"
 
 export async function generateMetadata({
     params,
@@ -93,6 +94,10 @@ const Page = async ({ params }: { params: { id: string } }) => {
                             />
                             <p>{question.user.name}</p>
                         </div>
+                        <p className="mt-3">
+                            📅{" "}
+                            {moment(question.createdAt).format("DD-MMMM-YYYY")}
+                        </p>
                     </div>
                 </div>
 

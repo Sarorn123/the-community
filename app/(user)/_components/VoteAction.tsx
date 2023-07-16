@@ -22,7 +22,7 @@ const VoteAction = ({ id, voteType, totalVote }: Props) => {
     const [loading, setLoading] = useState<VoteType>()
 
     async function voteAction(voteType: VoteType) {
-        if (!session) {
+        if (!session?.user.id) {
             return toast({
                 title: "Please Log In !",
                 description: "to vote an question you need to login first !",
@@ -31,7 +31,7 @@ const VoteAction = ({ id, voteType, totalVote }: Props) => {
         }
 
         const data: CreateVote = {
-            userId: session?.user.id || "",
+            userId: session.user.id,
             questionId: id,
             voteType: voteType,
         }

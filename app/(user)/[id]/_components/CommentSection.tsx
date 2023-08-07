@@ -28,6 +28,7 @@ const CommentSection = ({
     const [comments, setComments] = useState<CommentFullType[]>([])
     const [content, setContent] = useState<string>("")
     const [addingComment, setAddingComment] = useState<boolean>(false)
+    const [contentErrorLength] = useState<number>(1000)
 
     async function getComments() {
         try {
@@ -85,25 +86,32 @@ const CommentSection = ({
     }
 
     return getCommentLoading ? (
-        <div className="flex items-center">
+        <div className="flex items-center  mt-3 lg:mt-0">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             <h1>Getting Comment ...</h1>
         </div>
     ) : (
-        <div>
-            <h1 className="lg:text-lg font-semibold mt-3 lg:mt-0">
-                {totalComment} Comment
-            </h1>
+        <div className="mt-3">
+            <h1 className="lg:text-lg font-semibold">{totalComment} Comment</h1>
+            <p
+                className={`text-sm flex justify-end ${
+                    content.length >= contentErrorLength && "text-red-600"
+                }`}
+            >
+                {content.length}/{contentErrorLength}
+            </p>
             <Textarea
                 placeholder="write a comment ..."
-                className="mt-3"
+                className={`${
+                    content.length >= contentErrorLength && "border-red-600"
+                }`}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
             />
 
             <Button
                 onClick={addComment}
-                disabled={addingComment}
+                disabled={addingComment || content.length >= contentErrorLength}
                 className="mt-3"
             >
                 {addingComment && (

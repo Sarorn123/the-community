@@ -28,8 +28,11 @@ const AskQuestion = () => {
     const { data: session } = useSession()
     const [file, setFile] = useState<File>()
     const [title, setTitle] = useState<string>("")
+    const [titleLenError] = useState<number>(50)
     const [content, setContent] = useState<string>("")
+    const [contentLenError] = useState<number>(1000)
     const [tages, setTages] = useState<string>("")
+    const [tageLenError] = useState<number>(100)
     const [adding, setAdding] = useState<boolean>(false)
     const [dialog, setDialog] = useState<boolean>(false)
 
@@ -100,42 +103,56 @@ const AskQuestion = () => {
                 <div className="">
                     <Input
                         type="text"
-                        className="mt-5"
+                        className={`mt-5 ${
+                            title.length >= titleLenError && "border-red-600"
+                        }`}
                         placeholder="Title ..."
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <Textarea
                         id="name"
-                        className="mt-5"
+                        className={`mt-5 ${
+                            content.length >= contentLenError &&
+                            "border-red-600"
+                        }`}
                         placeholder="What's your problem ?"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                     />
                     <Input
                         type="file"
+                        accept=".png, .jpg"
                         className="mt-5"
                         onChange={(e) => setFile(e.target.files![0])}
                     />
                     <Input
                         type="text"
-                        className="mt-5"
+                        className={`mt-5 ${
+                            tages.length >= tageLenError && "border-red-600"
+                        }`}
                         placeholder="tages etc - react,auth,fixed"
                         value={tages}
                         onChange={(e) => setTages(e.target.value)}
                     />
                 </div>
                 <DialogFooter>
-                    {adding ? (
-                        <Button disabled>
+                    <Button
+                        disabled={
+                            adding ||
+                            content.length >= contentLenError ||
+                            title.length >= titleLenError ||
+                            tages.length >= tageLenError
+                        }
+                        type="submit"
+                        onClick={askQuestion}
+                        className="flex items-center"
+                    >
+                        {adding && (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                        </Button>
-                    ) : (
-                        <Button type="submit" onClick={askQuestion}>
-                            Ask
-                        </Button>
-                    )}
+                        )}
+                        Ask
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

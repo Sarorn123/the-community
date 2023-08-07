@@ -49,6 +49,7 @@ const CommentCard = ({
     const [showReply, setShowReply] = useState<boolean>(false)
     const [addingReply, setAddingReply] = useState<boolean>(false)
     const [reply, setReply] = useState<string>("")
+    const [replyErrorLength] = useState<number>(1000)
     const fullTypeReply = replys as ReplyFullType[]
     // const [checkBox, setCheckBox] = useState<boolean>(false)
     // const [isToggling, setIsToggling] = useState<boolean>(false)
@@ -79,7 +80,14 @@ const CommentCard = ({
 
     async function addReply(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.keyCode === 13) {
-            if (!reply) return
+            if (!session) {
+                toast({
+                    title: "Error ⚠",
+                    description: "Please Login First 😦☹",
+                    variant: "destructive",
+                })
+            }
+            if (!reply || reply.length >= replyErrorLength) return
             setAddingReply(true)
             const data: CreateReply = {
                 content: reply,
@@ -201,7 +209,9 @@ const CommentCard = ({
                     )}
                     <Input
                         placeholder="write a reply ..."
-                        className="mt-2"
+                        className={`mt-2 ${
+                            reply.length >= replyErrorLength && "border-red-600"
+                        }`}
                         value={reply}
                         onChange={(e) => setReply(e.target.value)}
                         onKeyDown={addReply}

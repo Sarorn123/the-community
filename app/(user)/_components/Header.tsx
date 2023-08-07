@@ -48,7 +48,9 @@ const Header = () => {
             <div className="flex justify-between items-center  py-3 px-10 container ">
                 <div className="flex items-center gap-3">
                     <Link href="/">
-                        <h1 className="font-bold lg:text-lg">Community</h1>
+                        <h1 className="font-bold lg:text-lg">
+                            Community <span className="text-[10px] ">beta</span>{" "}
+                        </h1>
                     </Link>
 
                     <div className="lg:hidden">

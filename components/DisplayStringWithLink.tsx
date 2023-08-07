@@ -9,7 +9,7 @@ export default function DisplayStringWithLink({ text }: Props) {
     // Split the text into parts: non-URL text and URLs
     const parts = text.split(urlRegex)
     return (
-        <pre className="mt-3">
+        <pre className="py-3 overflow-auto">
             {parts.map((part, index) => {
                 const isUrl = part.match(urlRegex)
 
